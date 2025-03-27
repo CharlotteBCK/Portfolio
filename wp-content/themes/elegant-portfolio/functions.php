@@ -1,4 +1,11 @@
 <?php
+
+
+function enqueue_tailwind_styles() {
+    wp_enqueue_style('tailwind-styles', get_template_directory_uri() . '/style.css');
+}
+add_action('wp_enqueue_scripts', 'enqueue_tailwind_styles');
+
 /**
  * After setup theme hook
  */
