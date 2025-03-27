@@ -1,6 +1,22 @@
 <?php
 
 
+function elegant_portfolio_child_enqueue_styles() {
+    wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
+}
+add_action('wp_enqueue_scripts', 'elegant_portfolio_child_enqueue_styles');
+
+if (!function_exists('perfect_portfolio_get_fonts')) {
+    function perfect_portfolio_get_fonts($font_name, $variant = 'regular') {
+        // Retourne un tableau avec la police et sa variante
+        return array(
+            'font' => $font_name . ', sans-serif'
+        );
+    }
+}
+
+
+
 function enqueue_tailwind_styles() {
     wp_enqueue_style('tailwind-styles', get_template_directory_uri() . '/style.css');
 }
@@ -18,22 +34,6 @@ function elegant_portfolio_theme_setup(){
 }
 add_action( 'after_setup_theme', 'elegant_portfolio_theme_setup', 100 );
 
-function elegant_portfolio_styles() {
-	$my_theme = wp_get_theme();
-	$version = $my_theme['Version'];
-
-    if( perfect_portfolio_is_woocommerce_activated() ){
-        //dependency call when woocommerce is activated
-        $array_style = array( 'perfect-portfolio-woocommerce-style','perfect-portfolio-style' );
-    }else{
-        $array_style = array( 'perfect-portfolio-style' );
-    }
-    
-    wp_enqueue_style( 'perfect-portfolio-style', get_template_directory_uri()  . '/style.css', array() );
-    
-    wp_enqueue_style( 'elegant-portfolio', get_stylesheet_directory_uri() . '/style.css', $array_style, $version );
-}
-add_action( 'wp_enqueue_scripts', 'elegant_portfolio_styles', 10 );
 
 function perfect_portfolio_customize_register_appearance( $wp_customize ) {
     
